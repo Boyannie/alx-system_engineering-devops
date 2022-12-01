@@ -1,2 +1,7 @@
 0	string SCHOOL school data
 !:mime school
+
+file -C -m school.mgc
+cp /bin/ls .
+file --mime-type -m school.mgc *
+file -m school.mgc *
