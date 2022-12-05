@@ -1,2 +1,2 @@
 #!/bin/bash
-egrep ^[[:alpha:]] /etc/ssh/ssdh_confi
+egrep ^[[:alpha:]] /etc/ssh/ssdh_config
