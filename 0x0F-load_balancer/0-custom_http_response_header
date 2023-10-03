@@ -1,12 +1,9 @@
 #!/usr/bin/env bash
-# This script configures web-0w to be identical to the web-01
-sudo apt-get -y update
-sudo apt-get -y install nginx
-sudo ufw allow 'Nginx HTTP'
-sudo chown -R "$USER":"$USER" /var/www/
-echo "Holberton School" > /var/www/html/index.nginx-debian.html
-echo "Ceci n'est pas une page" > /var/www/html/new_404.html
-sudo sed -i '/server_name _/a rewrite ^/redirect_me/ https://www.youtube.com/watch?v=QH2-TGUlwu4/$1 permanent;\n' /etc/nginx/sites-available/default
-sudo sed -i '/server_name _/a error_page 404 /new_404.html; \nlocation = /new_404.html \n{\nroot /var/www/html/;\ninternal; \n}' /etc/nginx/sites-available/default
-sudo sed -i '/# First attempt to serve request as file, then/a add_header X-Served-By $hostname;\n' /etc/nginx/sites-available/default
-sudo service nginx restart
+# Script that configures Nginx server with a custom header
+apt-get -y update
+apt-get -y install nginx
+echo "Hello World!" > /var/www/html/index.nginx-debian.html
+echo "Ceci n'est pas une page" > /usr/share/nginx/html/custom_404.html
+sed -i "s/server_name _;/server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/thesamtj permanent;\n\n\terror_page 404 \/custom_404.html;\n\tlocation = \/custom_404.html {\n\t\troot \/usr\/share\/nginx\/html;\n\t\tinternal;\n\t}/" /etc/nginx/sites-available/default
+sed -i "s/include \/etc\/nginx\/sites-enabled\/\*;/include \/etc\/nginx\/sites-enabled\/\*;\n\tadd_header X-Served-By \"$HOSTNAME\";/" /etc/nginx/nginx.conf
+service nginx start
